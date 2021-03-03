@@ -45,4 +45,7 @@ public class Grid : MonoBehaviour
             }
         }
     }
+    // public Node NodeFromWorldPoint(Vector3 worldPosition)
+    // { 
+    // }
 }
