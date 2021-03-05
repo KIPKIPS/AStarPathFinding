@@ -15,20 +15,23 @@ public class Grid : MonoBehaviour
     float nodeDiameter;//节点直径
     GameObject wallObj;
     Vector3 worldBttomLeft;//左下角坐标
+    public Transform player;
     void OnDrawGizmos()
     { //用来显示一个三维向量的包围框
         Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
         if (grid != null)
         {
+            Node playerNode = NodeFromWorldPoint(player.transform.position);
             foreach (Node n in grid)
             {
-                Gizmos.color = n.walkable ? Color.white : Color.red;
-                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
+                Gizmos.color = playerNode == n ? Color.cyan : (n.walkable ? Color.white : Color.red); //玩家则置为青色,否则根据是否障碍物进行判断,障碍物红色,通路白色
+                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));//着色
             }
         }
     }
     void Start()
     {
+        player.gameObject.SetActive(true);
         wallObj = GameObject.Find("Walls");
         wallObj.SetActive(true);
         nodeDiameter = nodeRadius * 2;
@@ -50,7 +53,8 @@ public class Grid : MonoBehaviour
             }
         }
         wallObj.SetActive(false);
-        NodeFromWorldPoint(new Vector3(0, 0, 0));
+        player.gameObject.SetActive(false);
+        //NodeFromWorldPoint(new Vector3(0, 0, 0));
     }
 
     //根据节点中心坐标返回对应的Node
