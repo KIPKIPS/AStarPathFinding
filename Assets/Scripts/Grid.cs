@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 using System.Net.Mime;
 using System.Collections;
@@ -12,6 +13,8 @@ public class Grid : MonoBehaviour
     public LayerMask unwalkableMask;
     int gridSizeX, gridSizeY;//节点的长宽数量
     float nodeDiameter;//节点直径
+    GameObject wallObj;
+    Vector3 worldBttomLeft;//左下角坐标
     void OnDrawGizmos()
     { //用来显示一个三维向量的包围框
         Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
@@ -26,6 +29,8 @@ public class Grid : MonoBehaviour
     }
     void Start()
     {
+        wallObj = GameObject.Find("Walls");
+        wallObj.SetActive(true);
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);//四舍五入到整数
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
@@ -34,7 +39,7 @@ public class Grid : MonoBehaviour
     void CreatGrid()
     {
         grid = new Node[gridSizeX, gridSizeY];//创建一个Node节点二维数组
-        Vector3 worldBttomLeft = transform.position + Vector3.left * gridWorldSize.x / 2 + Vector3.back * gridWorldSize.y / 2;//网格的左下角坐标
+        worldBttomLeft = transform.position + Vector3.left * gridWorldSize.x / 2 + Vector3.back * gridWorldSize.y / 2;//网格的左下角坐标
         for (int x = 0; x < gridSizeX; x++)
         {
             for (int y = 0; y < gridSizeY; y++)
@@ -44,8 +49,18 @@ public class Grid : MonoBehaviour
                 grid[x, y] = new Node(walkable, worldPoint);
             }
         }
+        wallObj.SetActive(false);
+        NodeFromWorldPoint(new Vector3(0, 0, 0));
     }
-    // public Node NodeFromWorldPoint(Vector3 worldPosition)
-    // { 
-    // }
+
+    //根据节点中心坐标返回对应的Node
+    public Node NodeFromWorldPoint(Vector3 worldPosition)
+    {
+        //计算索引
+        int xIndex = Mathf.RoundToInt(worldPosition.x - worldBttomLeft.x - 0.5f);
+        int yIndex = Mathf.RoundToInt(worldPosition.z - worldBttomLeft.z - 0.5f);
+        //print((worldPosition.x - worldBttomLeft.x).ToString() + "  " + (worldPosition.z - worldBttomLeft.z).ToString());
+        print("x : " + xIndex + " , y : " + yIndex + "");
+        return grid[xIndex, yIndex];
+    }
 }
