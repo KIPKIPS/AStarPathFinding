@@ -11,11 +11,18 @@ public class Node
     public int gCost;//G
     public int hCost;//H
 
+    public int gridX;//节点在网格中的X坐标
+    public int gridY;
+
+    public Node parent;//父节点
+
     //构造函数
-    public Node(bool _walkable, Vector3 _worldPosition)
+    public Node(bool _walkable, Vector3 _worldPosition, int _gridX, int _gridY)
     {
         walkable = _walkable;
         worldPosition = _worldPosition;
+        gridX = _gridX;
+        gridY = _gridY;
     }
     public int fCost
     { //F属性字段

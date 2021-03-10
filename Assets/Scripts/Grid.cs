@@ -15,23 +15,39 @@ public class Grid : MonoBehaviour
     float nodeDiameter;//节点直径
     GameObject wallObj;
     Vector3 worldBttomLeft;//左下角坐标
-    public Transform player;
+    public Transform seeker;
+    public Transform target;
+    public List<Node> path;
+    void Awake()
+    {
+        seeker = GameObject.Find("Seeker").transform;
+        target = GameObject.Find("Target").transform;
+    }
     void OnDrawGizmos()
     { //用来显示一个三维向量的包围框
         Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
         if (grid != null)
         {
-            Node playerNode = NodeFromWorldPoint(player.transform.position);
+            Node playerNode = NodeFromWorldPoint(seeker.transform.position);
+            Node targetNode = NodeFromWorldPoint(target.transform.position);
             foreach (Node n in grid)
             {
-                Gizmos.color = playerNode == n ? Color.cyan : (n.walkable ? Color.white : Color.red); //玩家则置为青色,否则根据是否障碍物进行判断,障碍物红色,通路白色
+                Gizmos.color = playerNode == n ? Color.cyan : (targetNode == n ? Color.green : (n.walkable ? Color.white : Color.red)); //起始点则置为青色,目标绿色,否则根据是否障碍物进行判断,障碍物红色,通路白色
+                if (path != null)
+                {
+                    if (path.Contains(n) && n != targetNode)
+                    {
+                        Gizmos.color = Color.black;
+                    }
+                }
                 Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));//着色
             }
         }
     }
     void Start()
     {
-        player.gameObject.SetActive(true);
+        seeker.gameObject.SetActive(true);
+        target.gameObject.SetActive(true);
         wallObj = GameObject.Find("Walls");
         wallObj.SetActive(true);
         nodeDiameter = nodeRadius * 2;
@@ -49,11 +65,12 @@ public class Grid : MonoBehaviour
             {
                 Vector3 worldPoint = worldBttomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y * nodeDiameter + nodeRadius);//计算出每一个节点的坐标
                 bool walkable = !(Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask));//定义的球体是否和物体相撞,处于layerMask的物体
-                grid[x, y] = new Node(walkable, worldPoint);
+                grid[x, y] = new Node(walkable, worldPoint, x, y);
             }
         }
         wallObj.SetActive(false);
-        player.gameObject.SetActive(false);
+        seeker.gameObject.SetActive(false);
+        target.gameObject.SetActive(false);
         //NodeFromWorldPoint(new Vector3(0, 0, 0));
     }
 
@@ -64,7 +81,35 @@ public class Grid : MonoBehaviour
         int xIndex = Mathf.RoundToInt(worldPosition.x - worldBttomLeft.x - 0.5f);
         int yIndex = Mathf.RoundToInt(worldPosition.z - worldBttomLeft.z - 0.5f);
         //print((worldPosition.x - worldBttomLeft.x).ToString() + "  " + (worldPosition.z - worldBttomLeft.z).ToString());
-        print("x : " + xIndex + " , y : " + yIndex + "");
+        //print("x : " + xIndex + " , y : " + yIndex + "");
+        xIndex = xIndex < 0 ? 0 : xIndex >= gridSizeX ? gridSizeX - 1 : xIndex;
+        yIndex = yIndex < 0 ? 0 : yIndex >= gridSizeY ? gridSizeY - 1 : yIndex;
         return grid[xIndex, yIndex];
+    }
+
+    //获取一个节点的邻居节点
+    public List<Node> GetNeighbours(Node node)
+    {
+        List<Node> neighboursList = new List<Node>();
+        if (node.gridX <= grid.GetLength(0) && node.gridY <= grid.GetLength(1))
+        {
+            for (int x = -1; x <= 1; x++)
+            {
+                for (int y = -1; y <= 1; y++)
+                {
+                    if (x == 0 && y == 0)
+                    {
+                        continue;
+                    }
+                    int checkX = node.gridX + x;
+                    int checkY = node.gridY + y;
+                    if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY)
+                    {
+                        neighboursList.Add(grid[checkX, checkY]);
+                    }
+                }
+            }
+        }
+        return neighboursList;
     }
 }
