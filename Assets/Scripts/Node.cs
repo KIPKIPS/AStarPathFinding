@@ -8,8 +8,8 @@ public class Node
     public bool walkable;//该网格节点是否可以行走
     public Vector3 worldPosition;//节点的世界坐标
 
-    public int gCost;//G
-    public int hCost;//H
+    public int gCost = 0;//G
+    public int hCost = 0;//H
 
     public int gridX;//节点在网格中的X坐标
     public int gridY;

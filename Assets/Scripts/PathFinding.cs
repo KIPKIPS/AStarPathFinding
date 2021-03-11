@@ -12,6 +12,9 @@ public class PathFinding : MonoBehaviour
         target = GameObject.Find("Target").transform;
         grid = GetComponent<Grid>();
     }
+    void Start()
+    {
+    }
     void Update()
     {
         FindPath(seeker.position, target.position);
@@ -53,6 +56,10 @@ public class PathFinding : MonoBehaviour
                 }
                 //计算新的G,从当前节点移动到目标邻居节点
                 int newMoveCost = currentNode.gCost + GetDistance(currentNode, neighbour);
+                // if (!openSet.Contains(neighbour))
+                // {
+                //     print(neighbour.gCost);
+                // }
                 if (newMoveCost < neighbour.gCost || !openSet.Contains(neighbour)) //已消耗小于
                 {
                     neighbour.gCost = newMoveCost;//更新gCost
