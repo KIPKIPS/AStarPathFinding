@@ -76,7 +76,7 @@ public class PathFinding : MonoBehaviour
         return 14 * min + 10 * max;
     }
 
-    //回收路径
+    //回溯路径
     void RetracePath(Node startNode, Node endNode)
     {
         List<Node> path = new List<Node>();
