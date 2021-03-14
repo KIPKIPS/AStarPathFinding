@@ -18,10 +18,15 @@ public class Grid : MonoBehaviour
     public Transform seeker;
     public Transform target;
     public List<Node> path;
+    float lastTime = 0f;
     void Awake()
     {
         seeker = GameObject.Find("Seeker").transform;
         target = GameObject.Find("Target").transform;
+    }
+    void Update()
+    {
+        lastTime += Time.deltaTime;
     }
     void OnDrawGizmos()
     { //用来显示一个三维向量的包围框
@@ -39,9 +44,14 @@ public class Grid : MonoBehaviour
                     {
                         Gizmos.color = Color.black;
                     }
+                    else if (n.existedInOpenset == true)
+                    {
+                        Gizmos.color = Color.magenta;
+                    }
                 }
                 Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));//着色
             }
+
         }
     }
     void Start()

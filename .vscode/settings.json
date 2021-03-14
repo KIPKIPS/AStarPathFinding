@@ -70,4 +70,6 @@
             "NewLineForFinally": false
         }
     },
+    "razor.format.enable": false,
+    "omnisharp.useEditorFormattingSettings": false,
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ public class PathFinding : MonoBehaviour
     }
     void Start()
     {
+
     }
     void Update()
     {
@@ -28,9 +30,11 @@ public class PathFinding : MonoBehaviour
         HashSet<Node> closedSet = new HashSet<Node>();
 
         openSet.Add(startNode);//起始节点添加到开放列表
+
         while (openSet.Count > 0) //开放列表不为空表示存在可以搜索的节点,寻路
         {
             Node currentNode = openSet[0];
+            //这里效率太慢,每次都遍历整个openSet来寻找最低消耗的节点,使用堆来优化,维护一个堆数据结构
             for (int i = 0; i < openSet.Count; i++)
             {
                 //若查询到F(总消耗)小于当前节点的,或者总消耗相同,但H(剩余耗费)小于当前节点的
@@ -56,10 +60,6 @@ public class PathFinding : MonoBehaviour
                 }
                 //计算新的G,从当前节点移动到目标邻居节点
                 int newMoveCost = currentNode.gCost + GetDistance(currentNode, neighbour);
-                // if (!openSet.Contains(neighbour))
-                // {
-                //     print(neighbour.gCost);
-                // }
                 if (newMoveCost < neighbour.gCost || !openSet.Contains(neighbour)) //已消耗小于
                 {
                     neighbour.gCost = newMoveCost;//更新gCost
@@ -68,6 +68,7 @@ public class PathFinding : MonoBehaviour
                     if (!openSet.Contains(neighbour))
                     {
                         openSet.Add(neighbour);
+                        neighbour.existedInOpenset = true;
                     }
                 }
             }
