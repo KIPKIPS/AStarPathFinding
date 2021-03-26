@@ -30,7 +30,7 @@ public class Heap<T> where T : IHeapItem<T> {
         curItemCount++;
     }
 
-    public void SortUp(T item) {
+    public void SortUp(T item) {//自底向上
         int parentIndex = (item.HeapIndex - 1) / 2;
         while (true) {
             T parentItem = items[parentIndex];
@@ -52,7 +52,7 @@ public class Heap<T> where T : IHeapItem<T> {
         return firstItem;
     }
 
-    public void SortDown(T item) {//自顶向下
+    public void SortDown(T item) {//自顶向下调整
         while (true) {
             int childLeftIndex = item.HeapIndex * 2 + 1;
             int childRightIndex = item.HeapIndex * 2 + 2;
@@ -61,7 +61,7 @@ public class Heap<T> where T : IHeapItem<T> {
             if (childLeftIndex < curItemCount) {
                 swapIndex = childLeftIndex;//初始化
                 if (childRightIndex < curItemCount) {
-                    //Compare
+                    //Compare接口,比较节点Left和节点Right,负值说明R的代价小于L
                     if (items[childLeftIndex].Compare(items[childLeftIndex], items[childRightIndex]) < 0) {
                         swapIndex = childRightIndex;
                     }

@@ -8054,6 +8054,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0aac335468791e46b5b4444a786146c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onlyDisplayPathGizoms: 1
   gridWorldSize: {x: 100, y: 100}
   nodeRadius: 0.5
   unwalkableMask:
