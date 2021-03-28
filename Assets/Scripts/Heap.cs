@@ -23,6 +23,7 @@ public class Heap<T> where T : IHeapItem<T> {
         SortUp(item);
     }
 
+    //堆插函数
     public void Add(T item) {
         item.HeapIndex = curItemCount;
         items[curItemCount] = item;
@@ -39,7 +40,6 @@ public class Heap<T> where T : IHeapItem<T> {
             } else {
                 break;
             }
-
             parentIndex = (item.HeapIndex - 1) / 2;//父节点索引
         }
     }

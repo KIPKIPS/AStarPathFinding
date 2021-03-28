@@ -4681,6 +4681,7 @@ GameObject:
   - component: {fileID: 1069646862}
   - component: {fileID: 1069646861}
   - component: {fileID: 1069646860}
+  - component: {fileID: 1069646864}
   m_Layer: 0
   m_Name: Seeker
   m_TagString: Untagged
@@ -4765,6 +4766,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1069646864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1069646859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e031937a39b08640bb956bd90054912, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1923893681}
 --- !u!1 &1073007655
 GameObject:
   m_ObjectHideFlags: 0
@@ -8054,14 +8068,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0aac335468791e46b5b4444a786146c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onlyDisplayPathGizoms: 1
+  displayGizoms: 0
   gridWorldSize: {x: 100, y: 100}
   nodeRadius: 0.5
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 256
-  seeker: {fileID: 0}
-  target: {fileID: 0}
+  seeker: {fileID: 1069646863}
+  target: {fileID: 1923893681}
 --- !u!114 &2121252314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8074,8 +8088,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8fc895a1e1b8f43b207c058ba5e799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seeker: {fileID: 0}
-  target: {fileID: 0}
+  seeker: {fileID: 1069646863}
+  target: {fileID: 1923893681}
 --- !u!1 &2121740393
 GameObject:
   m_ObjectHideFlags: 0
