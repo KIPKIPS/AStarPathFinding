@@ -7,6 +7,7 @@ public class Utils : MonoBehaviour {
     public float speed = 0.2f;
     private Vector3[] path;
     private int targetIndex;
+    public Color color;
 
     void Start() {
         PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
@@ -39,7 +40,7 @@ public class Utils : MonoBehaviour {
     public void OnDrawGizmos() {
         if (path != null) {
             for (int i = targetIndex; i < path.Length; i++) {
-                Gizmos.color = Color.black;
+                Gizmos.color = color;
                 Gizmos.DrawCube(path[i], Vector3.one);
                 if (i == targetIndex) {
                     Gizmos.DrawLine(transform.position, path[i]);
@@ -49,4 +50,6 @@ public class Utils : MonoBehaviour {
             }
         }
     }
+
+    void Awake() { }
 }

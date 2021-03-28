@@ -78,6 +78,8 @@ public class PathFinding : MonoBehaviour {
                         if (!openSet.Contains(neighbour)) {
                             openSet.Add(neighbour);
                             neighbour.existedInOpenset = true; //标记是否存在过
+                        } else {
+                            openSet.UpdateItem(neighbour);
                         }
                     }
                 }
