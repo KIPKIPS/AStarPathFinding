@@ -4,6 +4,7 @@ using System.Net.Mime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Color = UnityEngine.Color;
 
 public class Grid : MonoBehaviour {
     //public bool onlyDisplayPathGizoms;
@@ -51,7 +52,7 @@ public class Grid : MonoBehaviour {
             foreach (Node n in grid) {
                 //起始点则置为青色,目标绿色,否则根据是否障碍物进行判断,障碍物红色,通路白色
                 // Gizmos.color = playerNode == n ? Color.cyan : (targetNode == n ? Color.green : (n.walkable ? Color.white : Color.red));
-                Gizmos.color = n.walkable ? Color.white : Color.red;
+                Gizmos.color = n.walkable ? Color.cyan : Color.red;
                 // if (path != null) {
                 //     if (path.Contains(n) && n != targetNode) {
                 //         Gizmos.color = Color.black;

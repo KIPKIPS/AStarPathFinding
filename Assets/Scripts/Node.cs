@@ -14,7 +14,7 @@ public class Node : IHeapItem<Node> {
     public int gridY;
 
     public Node parent;//父节点
-    public bool existedInOpenset = false;
+    // public bool existedInOpenset = false;
     private int heapIndex;
 
     //构造函数

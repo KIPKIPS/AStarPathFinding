@@ -23,6 +23,9 @@ public class Utils : MonoBehaviour {
 
     IEnumerator FollowPath() {
         Vector3 currentWayPoint = path[0];
+        foreach (var p in path) {
+            Debug.Log(p);
+        }
         while (true) {
             if (transform.position == currentWayPoint) {
                 targetIndex++;

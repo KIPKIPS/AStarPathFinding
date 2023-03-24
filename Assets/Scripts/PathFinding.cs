@@ -77,7 +77,7 @@ public class PathFinding : MonoBehaviour {
                         neighbour.parent = currentNode;
                         if (!openSet.Contains(neighbour)) {
                             openSet.Add(neighbour);
-                            neighbour.existedInOpenset = true; //标记是否存在过
+                            // neighbour.existedInOpenset = true; //标记是否存在过
                         } else {
                             openSet.UpdateItem(neighbour);
                         }
@@ -100,6 +100,7 @@ public class PathFinding : MonoBehaviour {
         return 14 * min + 10 * max;
     }
 
+    //这里做优化 剔除了同方向点,只拿跳点
     Vector3[] SimplifyPath(List<Node> path) {
         List<Vector3> wayPoints = new List<Vector3>();
         Vector2 directionOld = Vector2.zero;
@@ -111,7 +112,7 @@ public class PathFinding : MonoBehaviour {
 
             directionOld = directionNew;
         }
-        Debug.Log(wayPoints.Count);
+        Debug.Log($"原节点个数{path.Count},剔除后节点个数{wayPoints.Count}");
         return wayPoints.ToArray();
     }
 
